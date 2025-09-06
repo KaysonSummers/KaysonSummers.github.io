@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kayson's Portfolio</title>
-    <link ref = "stylesheet" href ="styles/styles.css">
+    <link rel = "stylesheet" href ="styles/styles.css">
     <script src = "scripts/scripts.js"></script>
 </head>
-<body>
+<body id="mainpage">
     <h1>Kayson's Portfolio</h1>
 
     <p><img src ="/Photos/Kayson.jpg" alt="Photo of me" style="float:left"></p>
@@ -20,7 +20,7 @@
     <h2 id="projects"> JavaScript Projects </h2>
 
     <h2 id= "settings">Settings</h2>
-    <p>Current setting: Default</p>
+    <p>Current setting: <span id="mode">Default</span></p>
     <button onclick="Light()"> Light</button>
     <button onclick="Dark()"> Dark</button>
     <button onclick="Default()"> default</button>
