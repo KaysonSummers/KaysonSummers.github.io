@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel ="stylesheet" href="../../styles/styles.css">
+    <script src = "../../scripts/scripts.js"></script>
+    <script src = "calculatorScripts.js"></script>
+</head>
+<body id = "mainpage">
+
+    <h1><span id = "shape">Parallelogram</span> Calculator</h1>
+
+    <p><img id="shapeImage" src ="../../Photos/parallelogram.png" width="400"></p>
+
+    <div id="ParallelogramInputs">
+    <h2>Perimeter</h2>
+    <p>Result: <span id='parallelogramPerimeterResult'></span></p>
+    <p><label for='pBase'>Base (B):</label><input type='text' id='pBase'></p>
+	<p><label for='side'>Side (A):</label><input type='text' id='side'></p>
+    <button onclick="parallelogramPerimeter()">Calculate</button>
+
+    <br><br><hr>
+
+    <h2>Area</h2>
+    <p>Result: <span id='parallelogramAreaResult'></span></p>
+    <p><label for='areaBase'>Base (B):</label><input type='text' id='areaBase'></p>
+	<p><label for='parallelogramHeight'>Height (H):</label><input type='text' id='parallelogramHeight'></p>
+    <button onclick="parallelogramArea()">Calculate</button>
+    </div>
+
+    <div id="prismInputs" style="display: none;">
+    <h2>Volume</h2>
+    <p>Result: <span id='prismVolumeResult'></span></p>
+    <p><label for='PrismBase'>Base:</label><input type='text' id='prismBase'></p>
+	<p><label for='prismHeight'>Height:</label><input type='text' id='prismHeight'></p>
+    <p><label for='length'>length:</label><input type='text' id='length'></p>
+    <button onclick="prismVolume()">Calculate</button> 
+    </div>
+
+    <br><br>
+
+    <button onclick="showParallelogram()">Parallelogram</button>
+    <button onclick="showPrism()">Prism</button>
+
+    <h2 id= "settings">Settings</h2>
+    <p>Current setting: <span id="mode">Default</span></p>
+    <button onclick="Light()"> Light</button>
+    <button onclick="Dark()"> Dark</button>
+    <button onclick="Default()"> Default</button>
+    
+</body>
+</html>
