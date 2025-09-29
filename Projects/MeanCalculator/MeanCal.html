@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mean Calculator</title>
+    <link rel ="stylesheet" href="../../styles/styles.css">
+    <script src = "../../scripts/scripts.js"></script>
+    <script src = "MeanCalScript.js"></script>
+</head>
+<body id = "mainpage">
+    
+    <h2>Data Entry</h2>
+
+    <p><label for='textBox'>Enter a value:</label><input type='text' id='textBox'></p>
+    <button onclick="addValue()">Add Value</button>
+    <button onclick="removeValue()">Remove Value</button>
+
+    <h2>Current Dataset</h2>
+
+    <p id ="dataset"></p>
+
+    <h2>Current Mean</h2>
+    <p>Mean: <span id ="meanVal"></span></p>
+
+    <button><a href="../../index.html"> Back</a></button>
+
+    <h2 id= "settings">Settings</h2>
+    <p>Current setting: <span id="mode">Default</span></p>
+    <button onclick="Light()"> Light</button>
+    <button onclick="Dark()"> Dark</button>
+    <button onclick="Default()"> Default</button>
+</body>
+</html>
