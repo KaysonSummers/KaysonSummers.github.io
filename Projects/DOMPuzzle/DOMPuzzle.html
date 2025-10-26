@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>DOM Puzzle</title>
+    <style>
+        #puzzle{
+            width: 500px;
+            height: 500px;
+            border: 5px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id = 'puzzle'></div>
+
+    <script>
+        //title
+        const title = document.createElement('h1');
+        title.textContent = 'DOM Puzzle';
+        document.body.insertBefore(title, document.getElementById("puzzle"));
+
+        //text at the bottom
+        const description = document.createElement('p');
+        description.textContent = 'This is a puzzle created entirely with JavaScript';
+        document.body.append(description);
+
+        //Highlights the outer box when the mouse hovers over
+        puzzle.addEventListener('mouseenter',() =>{
+            puzzle.style.border = '5px solid orange';
+        });
+
+        //Unhighlights the outher box when mouse leaves
+        puzzle.addEventListener('mouseleave',() =>{
+            puzzle.style.border = '5px solid black';
+        });
+
+        //Makes a square 1/4 of the outter box
+        const createSection = (id) => {
+            const section = document.createElement('div');
+            section.id = id;
+            section.style.width = '250px';
+            section.style.width = '250px';
+            section.style.backgroundColor = '#7338a0';
+            puzzle.appendChild(section);
+            return section;
+        }
+    
+        const createRow = () => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';       
+            row.style.width = '100%';
+            row.style.height = '250px';
+            return row;
+        };
+
+        //Makes the top row
+        const topRow = createRow();
+        const topLeft = createSection('buttonBox');
+        const topRight = createSection('topRight');
+        topRow.appendChild(topLeft);
+        topRow.appendChild(topRight);
+        puzzle.appendChild(topRow);
+
+        //Makes the bottom row
+        const bottomRow = createRow();
+        const bottomLeft = createSection('bottomLeft');
+        const bottomRight = createSection('buttonGrid');
+        bottomRow.appendChild(bottomLeft);
+        bottomRow.appendChild(bottomRight);
+        puzzle.appendChild(bottomRow);
+
+
+        //Makes buttons
+        const createButton = (parent, id, width, height,top, left, backgroundColor, text) => {
+            const button = document.createElement('button');
+            button.id = id;
+            button.style.width = width + "px";
+            button.style.height = height + "px";
+            button.style.top = top + "px";
+            button.style.left = left + "px";
+            button.style.backgroundColor = backgroundColor;
+            button.textContent = text;
+            button.style.color = 'white';
+            parent.appendChild(button);
+        };
+
+        createButton(topLeft,"A", 125,125,0,0, '#9455f4', "A");
+        createButton(topLeft, "B", 125,125,125,0, '#4a2b73', "B");
+        createButton(topLeft, "C", 125,125,125,0, '#594492', "C");
+        createButton(topLeft, "D", 125,125,1000,1000, '#854DDC', "D");
+
+        //creates the grid of 100 buttons
+        const createGrid = (parent) => {
+            const buttons = [];
+
+            parent.style.display = 'grid';
+            parent.style.gridTemplateColumns = 'repeat(10, 1fr)';
+            parent.style.gridTemplateRows = 'repeat(10, 1fr)'; 
+            parent.style.gap = '0px';
+
+            for (let r = 0; r < 10; r++){
+                buttons[r]= [];
+                for (let c = 0; c < 10; c++){
+                    const button = document.createElement('button');
+                    button.style.width = '25px';
+                    button.style.height ='25px';
+                    button.style.backgroundColor = '#c39cfe';
+                    button.isOn = false;
+                    parent.appendChild(button);
+
+                    buttons[r][c]= button;
+
+                    //Changes the color of buttons clicked and the ones next to it
+                    button.addEventListener('click', ()=> {
+                        if(!button.isOn){
+                            button.style.backgroundColor = '#4a2574';
+                            button.isOn = true;
+                        }
+                        else{
+                            button.style.backgroundColor = '#c39cfe';
+                            button.isOn = false;
+                        }
+
+                        const left = c - 1;
+                        const right = c + 1;
+                        if(button.isOn){
+                            if(left >=0)
+                                buttons[r][left].style.backgroundColor = '#ff9e00';
+                        } else
+                            if(left >=0)
+                                buttons[r][left].style.backgroundColor = '#c39cfe';
+
+                        if(button.isOn){
+                            if(right < 10)
+                                buttons[r][right].style.backgroundColor = '#ff9e00';
+                        } else 
+                            if(right < 10)
+                                buttons[r][right].style.backgroundColor = '#c39cfe';
+                    })
+                }
+            }
+        }
+
+        createGrid(bottomRight);
+
+    </script>
+    
+    <button><a href="../../index.html"> Back</a></button>
+</body>
+</html>
