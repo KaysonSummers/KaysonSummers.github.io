@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comment Submission</title>
+</head>
+<body>
+
+ <!-- Contact section-->
+<section id="contact"> 
+  <h2>Contact Us</h2>
+  <form id="contact-form" onsubmit="return false;">
+    
+    <label for="name">Name:</label>
+    <input 
+      type="text" 
+      id="name" 
+      name="name" 
+      required 
+      pattern="[A-Za-z\s]+" 
+      title="Please enter only letters and spaces.">
+    <br><br>
+
+    <label for="phone">Phone Number:</label>
+    <input 
+      type="tel" 
+      id="phone" 
+      name="phone" 
+      required 
+      pattern="^\+?[0-9\s\-]{7,15}$" 
+      title="Please enter a valid phone number (digits, spaces, dashes, optional +).">
+    <br><br>
+
+    <label for="email">Email:</label>
+    <input 
+      type="email" 
+      id="email" 
+      name="email" 
+      required 
+      title="Please enter a valid email address.">
+    <br><br>
+
+    <label for="comment">Comment:</label>
+    <textarea 
+      id="comment" 
+      name="comment" 
+      rows="5" 
+      required 
+      placeholder="Write your message here..."></textarea>
+    <br><br>
+
+    <button type="submit">Submit</button>
+  </form>
+   <div id="contact-feedback"></div>
+</section>
+
+<!--Account creation section-->
+<section id="account">
+  <h2>Create Account</h2>
+  <form id="account-form" onsubmit="return false;">
+    
+    <label for="username">Username:</label>
+    <input 
+      type="text" 
+      id="username" 
+      name="username" 
+      placeholder="Enter your username"
+      required>
+    <div id="username-feedback"></div>
+    <br><br>
+
+    <label for="password">Password:</label>
+    <input 
+      type="password" 
+      id="password" 
+      name="password" 
+      placeholder="Enter your password"
+      required>
+    <div id="password-feedback"></div>
+    <br><br>
+
+    <button type="submit">Create Account</button>
+  </form>
+  <div id="account-feedback"></div>
+</section>
+
+<script>
+function sanitizeInput(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
+
+// Live validation for username
+const usernameInput = document.getElementById('username');
+const usernameFeedback = document.getElementById('username-feedback');
+usernameInput.addEventListener('input', () => {
+  const value = usernameInput.value;
+  const usernamePattern = /^[A-Za-z0-9_]+$/;
+  if (value.length === 0) {
+    usernameFeedback.textContent = '';
+  } else if (!usernamePattern.test(value)) {
+    usernameFeedback.textContent = 'Username can only contain letters, numbers, and underscores.';
+    usernameFeedback.style.color = 'red';
+  } else {
+    usernameFeedback.textContent = 'Username looks good!';
+    usernameFeedback.style.color = 'green';
+  }
+});
+
+// Live validation for password
+const passwordInput = document.getElementById('password');
+const passwordFeedback = document.getElementById('password-feedback');
+passwordInput.addEventListener('input', () => {
+  const value = passwordInput.value;
+  const lengthRule = /.{8,}/;
+  const upperRule = /[A-Z]/;
+  const lowerRule = /[a-z]/;
+  const numberRule = /[0-9]/;
+  const specialRule = /[!@#$%^&*(),.?":{}|<>]/;
+
+  let messages = [];
+  if (!lengthRule.test(value)) messages.push('At least 8 characters');
+  if (!upperRule.test(value)) messages.push('At least 1 uppercase letter');
+  if (!lowerRule.test(value)) messages.push('At least 1 lowercase letter');
+  if (!numberRule.test(value)) messages.push('At least 1 number');
+  if (!specialRule.test(value)) messages.push('At least 1 special character');
+
+  if (messages.length === 0) {
+    passwordFeedback.textContent = 'Password meets all requirements!';
+    passwordFeedback.style.color = 'green';
+  } else {
+    passwordFeedback.textContent = 'Requirements not met: ' + messages.join(', ');
+    passwordFeedback.style.color = 'red';
+  }
+});
+
+// Sanitizes contact information
+const contactForm = document.getElementById('contact-form');
+const contactFeedback = document.getElementById('contact-feedback');
+contactForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const comment = document.getElementById('comment').value;
+
+
+
+  const sanitizedData = {
+    name: sanitizeInput(name),
+    phone: sanitizeInput(phone),
+    email: sanitizeInput(email),
+    comment: sanitizeInput(comment)
+  };
+
+  console.log('Sanitized Contact Data:', sanitizedData);
+  contactFeedback.textContent = 'All fields are valid! Your comment has been submitted.';
+  contactFeedback.style.color = 'green';
+});
+
+
+// Sanitizes account information
+const accountForm = document.getElementById('account-form');
+const accountFeedback = document.getElementById('account-feedback');
+accountForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  const usernamePattern = /^[A-Za-z0-9_]+$/;
+  const lengthRule = /.{8,}/;
+  const upperRule = /[A-Z]/;
+  const lowerRule = /[a-z]/;
+  const numberRule = /[0-9]/;
+  const specialRule = /[!@#$%^&*(),.?":{}|<>]/;
+
+  const sanitizedData = {
+    username: sanitizeInput(username),
+    password: sanitizeInput(password)
+  };
+
+  console.log('Sanitized Account Data:', sanitizedData);
+  accountFeedback.textContent = 'All fields are valid! Account has been created.';
+  accountFeedback.style.color = 'green';
+});
+</script>
+
+<button><a href="../../index.html"> Back</a></button>
+</body>
+</html>
