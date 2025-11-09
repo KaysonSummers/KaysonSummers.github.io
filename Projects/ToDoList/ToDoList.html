@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link rel = stylesheet href="../../styles/styles.css">
+    <script src = '../../scripts/scripts.js'></script>
+</head>
+<body id="mainpage">
+    <h2>To do List</h2>
+
+    <form id="ToDoForm">
+        <input type = 'text' id="taskInput" placeholder="Entere a task" required>
+        <button type = 'submit'>Add</button>
+    </form>
+    
+    <ul id="ToDoList"></ul>
+        <p>Tasks added this session: <span id = 'counter'>0</span></p>
+
+    <button><a href="../../index.html"> Back</a></button>
+
+    <h2 id= "settings">Settings</h2>
+    <p>Current setting: <span id="mode">Default</span></p>
+    <button onclick="Light()"> Light</button>
+    <button onclick="Dark()"> Dark</button>
+    <button onclick="Default()"> Default</button>
+
+    <script>
+        const form = document.getElementById("ToDoForm");
+        const taskInput = document.getElementById('taskInput');
+        const list = document.getElementById("ToDoList");
+        const sessionCounter = document.getElementById('counter');
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let sessionCount = Number(sessionStorage.getItem('sessionCount') || 0);
+        sessionCounter.textContent = sessionCount;
+
+        function refreshPage(){
+            list.innerHTML = '';
+            tasks.forEach((task,index) => {
+                const li = document.createElement('li');
+                li.textContent = task + ' ';
+
+                const removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.addEventListener('click', () => removeTask(index));
+
+                li.appendChild(removeButton);
+                list.appendChild(li);
+            });
+
+            function removeTask(index){
+                tasks.splice(index,1);
+                localStorage.setItem('tasks',JSON.stringify(tasks));
+                refreshPage();
+            }
+        }
+
+        form.addEventListener('submit', (e) =>{
+                e.preventDefault();
+                const newTask = taskInput.value.trim();
+                if(newTask === '') return;
+
+                tasks.push(newTask);
+                localStorage.setItem('tasks',JSON.stringify(tasks));
+                taskInput.value = '';
+
+            sessionCount++;
+            sessionStorage.setItem('sessionCounter',sessionCount)
+            sessionCounter.textContent = sessionCount;
+
+                refreshPage();
+            })
+
+            refreshPage();
+    </script>
+
+</body>
+</html>
