@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Collection</title>
+    <style>
+    .media-item img {
+        width: 250px;   
+        height: auto;     
+        object-fit: cover;
+        border-radius: 4px;
+    }
+    </style>
+</head>
+<body>
+    <h1>Video Game Collection</h1>
+    <div id="media-container"></div>
+
+    <script>
+    const VideoGames = `[ 
+    {"title": "Elden Ring",
+     "year":"2022",
+     "price":59.99,
+     "thumbnail":"MediaPhotos/ER.jpg"},
+    {"title": "Hollow Knight: Silksong",
+     "year":"2025",
+     "price":19.99,
+     "thumbnail":"MediaPhotos/SK.jpg"},
+    {"title": "Borderlands 2",
+     "year":"2012",
+     "price":19.99,
+     "thumbnail":"MediaPhotos/BL2.jpg"}]`;
+     
+
+        class VideoGame {
+            #title;
+            #price;
+
+            constructor(title,year,price,thumbnail){
+                this.#title = title;
+                this.year = year;
+                this.#price = price;
+                this.thumbnail = thumbnail;
+            }
+
+            get title(){
+                return this.#title;
+            }
+
+            set title(value){
+                if(typeof value !== "string"){
+                    value= String(value);
+                }
+                value = value.trim();
+                if(value.length > 50){
+                    value= value.slice(0,50);
+                }
+                this.#title = value;
+            }
+
+            get price(){
+                return this.#price;
+            }
+
+            set price(value){
+                let num = Number(value);
+                if(isNaN(num) || num < 0)
+                    num = 0;
+                this.#price = num;
+            }
+
+            get year(){
+                return this._year;
+            }
+
+            set year(value){
+                const num = Number(value);
+                this._year = isNaN(num) ? null : num;
+            }
+
+            get thumbnail(){
+                return this._thumbnail;
+            }
+
+            set thumbnail(value){
+                this._thumbnail = value;
+            }
+
+    toString() {
+    const yearStr = this.year ? this.year : "Unknown year";
+    return `${this.title} (${yearStr}) - $${this.price.toFixed(2)}`;
+  }
+
+    toHTMLElement() {
+        const card = document.createElement("div");
+        card.classList.add("media-item");
+
+        const img = document.createElement("img");
+        img.src = this.thumbnail;
+        img.alt = this.title;
+
+        const titleEl = document.createElement("h3");
+        titleEl.textContent = this.title;
+
+        const yearEl = document.createElement("p");
+        yearEl.textContent = `Year: ${this.year}`;
+
+        const priceEl = document.createElement("p");
+        priceEl.textContent = `Price: $${this.price.toFixed(2)}`;
+
+        card.appendChild(img);
+        card.appendChild(titleEl);
+        card.appendChild(yearEl);
+        card.appendChild(priceEl);
+
+        return card;
+        }
+    }
+
+    const gameArray = JSON.parse(VideoGames);
+
+    const games = gameArray.map(
+        (item) => new VideoGame(item.title, item.year, item.price, item.thumbnail)
+    );
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const container = document.getElementById("media-container");
+
+    games.forEach((game) => {
+    const gameElement = game.toHTMLElement();
+    container.appendChild(gameElement);
+        });
+    });
+
+    
+     </script>
+
+     <button><a href="../../index.html"> Back</a></button>
+</body>
+</html>
